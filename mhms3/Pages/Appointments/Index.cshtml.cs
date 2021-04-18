@@ -7,12 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using mhms3.Data;
 using mhms3.Models;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
-namespace mhms3.Pages.Clients
+namespace mhms3.Pages.Appointments
 {
-    
     public class IndexModel : PageModel
     {
         private readonly mhms3.Data.ApplicationDbContext _context;
@@ -22,15 +20,15 @@ namespace mhms3.Pages.Clients
             _context = context;
         }
 
-        public IList<Client> Client { get;set; }
+        public IList<Appointment> Appointment { get;set; }
 
         public async Task OnGetAsync()
         {
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-            Client = await _context.Client
+            Appointment = await _context.Appointment
                 .Where(u => u.CounselorID == currentUserID)
-                .ToListAsync();
+                .Include(a => a.Client).ToListAsync();
         }
     }
 }

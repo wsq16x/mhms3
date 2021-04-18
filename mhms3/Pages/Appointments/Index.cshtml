@@ -1,0 +1,61 @@
+﻿@page
+@model mhms3.Pages.Appointments.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_dashboard.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].CounselorID)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].AppDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].TimeStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].TimeEnd)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Appointment) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CounselorID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeEnd)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

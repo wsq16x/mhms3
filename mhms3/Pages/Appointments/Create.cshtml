@@ -1,0 +1,61 @@
+﻿@page
+@model mhms3.Pages.Appointments.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_dashboard.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Appointment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Appointment.ClientID" class="control-label"></label>
+                <select asp-for="Appointment.ClientID" class="form-control" asp-items="ViewBag.ClientID" name="ClientID"></select>
+            </div>
+            <!--<div class="form-group">
+                <label asp-for="Appointment.CounselorID" class="control-label"></label>
+                <input asp-for="Appointment.CounselorID" class="form-control" name="CounselorID" />
+                <span asp-validation-for="Appointment.CounselorID" class="text-danger"></span>
+            </div>-->
+            <div class="form-group">
+                <label asp-for="Appointment.AppDate" class="control-label"></label>
+                <input asp-for="Appointment.AppDate" class="form-control" name="AppDate" />
+                <span asp-validation-for="Appointment.AppDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Appointment.TimeStart" class="control-label"></label>
+                <input asp-for="Appointment.TimeStart" class="form-control" name="TimeStart" />
+                <span asp-validation-for="Appointment.TimeStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Appointment.TimeEnd" class="control-label"></label>
+                <input asp-for="Appointment.TimeEnd" class="form-control" name="TimeEnd" />
+                <span asp-validation-for="Appointment.TimeEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@if (Model.err == 1)
+{
+    <div class="alert alert-danger" role="alert">
+        Time overlaps with existing appointments. 
+    </div>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

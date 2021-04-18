@@ -73,7 +73,7 @@ namespace mhms3.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Pages/Clients/Index.cshtml");
+            returnUrl ??= Url.Content("/Clients/Index");
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         

@@ -43,6 +43,7 @@ namespace mhms3.Pages.Clients
                 return Page();
             }
 
+            //write user ID with create data
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             Client.CounselorID = currentUserID;

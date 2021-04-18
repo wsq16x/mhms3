@@ -14,5 +14,6 @@ namespace mhms3.Data
         {
         }
         public DbSet<mhms3.Models.Client> Client { get; set; }
+        public DbSet<mhms3.Models.Appointment> Appointment { get; set; }
     }
 }
