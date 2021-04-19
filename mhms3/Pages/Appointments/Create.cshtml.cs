@@ -22,7 +22,10 @@ namespace mhms3.Pages.Appointments
 
         public IActionResult OnGet()
         {
-        ViewData["ClientID"] = new SelectList(_context.Client, "ID", "ID");
+            ClaimsPrincipal currentUser = this.User;
+            var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var clients = _context.Client.Where(u => u.CounselorID == currentUserID);
+            ViewData["ClientID"] = new SelectList(clients, "ID", "ID");
             return Page();
         }
 
@@ -84,7 +87,8 @@ namespace mhms3.Pages.Appointments
                     Console.WriteLine("=======================================");
 
                     err = 1;
-
+                    var clients = _context.Client.Where(u => u.CounselorID == currentUserID);
+                    ViewData["ClientID"] = new SelectList(clients, "ID", "ID");
                     return Page();
                 }
 
