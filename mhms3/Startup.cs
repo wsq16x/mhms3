@@ -5,12 +5,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,7 +64,21 @@ namespace mhms3
             }
 
             app.UseHttpsRedirection();
+
+            //set up custom content type
+            var provider = new FileExtensionContentTypeProvider();
+            //add new mappings
+            provider.Mappings[".bin"] = "application/octet-stream";
+            
             app.UseStaticFiles();
+            
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "face-api", "models")),
+                RequestPath = "/StaticContentDir",
+                ContentTypeProvider = provider
+            });
 
             app.UseRouting();
 
