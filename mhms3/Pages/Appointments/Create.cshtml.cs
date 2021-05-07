@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using mhms3.Data;
 using mhms3.Models;
 using System.Security.Claims;
+using mhms3.Helpers;
 
 namespace mhms3.Pages.Appointments
 {
@@ -27,13 +28,15 @@ namespace mhms3.Pages.Appointments
             var clients = _context.Client.Where(u => u.CounselorID == currentUserID);
             ViewData["ClientID"] = new SelectList(clients, "ID", "ID");
             return Page();
+
+
         }
 
         [BindProperty]
         public Appointment Appointment { get; set; }
         //   .ToListAsync();
 
-        public int err { get; set; }
+        public int Err { get; set; }
         
 
 
@@ -56,9 +59,9 @@ namespace mhms3.Pages.Appointments
             {
                 return Page();
             }
+
             ClaimsPrincipal currentUser = this.User;
             var currentUserID = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-            Appointment.CounselorID = currentUserID;
 
             //var appointments = _context.Appointment
             //   .Select(Appointment => new SelectListItem { Value = AppDate, Appointment.TimeStart = TimeStart, Appointment.TimeEnd = TimeEnd })
@@ -71,6 +74,11 @@ namespace mhms3.Pages.Appointments
                     TimeStart < appointment.TimeEnd &&
                     TimeEnd > appointment.TimeStart)
                 .ToList();
+
+            var SessionKey = RNGCrypto.RandomString(12);
+            Console.WriteLine(SessionKey);
+
+         
 
             if (queryApointments.Any())
             {
@@ -86,7 +94,7 @@ namespace mhms3.Pages.Appointments
                     Console.WriteLine("     {0}", apointment.TimeEnd);
                     Console.WriteLine("=======================================");
 
-                    err = 1;
+                    Err = 1;
                     var clients = _context.Client.Where(u => u.CounselorID == currentUserID);
                     ViewData["ClientID"] = new SelectList(clients, "ID", "ID");
                     return Page();
@@ -97,6 +105,9 @@ namespace mhms3.Pages.Appointments
             else
             {
                 _context.Appointment.Add(Appointment);
+                Appointment.CounselorID = currentUserID;
+                Appointment.SessionKey = SessionKey;
+
                 await _context.SaveChangesAsync();
             }
 

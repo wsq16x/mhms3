@@ -15,7 +15,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
+//using Westwind.AspNetCore.LiveReload;
+
 
 namespace mhms3
 {
@@ -38,7 +41,8 @@ namespace mhms3
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddRazorPages();
+            services.AddRazorPages()
+                    .AddRazorRuntimeCompilation();
 
             services.AddAuthorization(options =>
             {
@@ -46,6 +50,26 @@ namespace mhms3
                     .RequireAuthenticatedUser()
                     .Build();
             });
+
+            //session state (cookies)
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddControllers();
+            //services.AddSignalR();
+
+
+            //add peerjs server 
+            //services.AddPeerJsServer();
+
+            //westwind
+            //services.AddLiveReload();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +79,7 @@ namespace mhms3
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseBrowserLink();
             }
             else
             {
@@ -80,18 +105,31 @@ namespace mhms3
                 ContentTypeProvider = provider
             });
 
+
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseWebSockets();
+            //westwind
+            //app.UseLiveReload();
 
+            //session must be after useRouting() and before useEndpoints()
+            app.UseSession();
+
+            //SignalR Hub endpoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
 
             CreateRoles(serviceProvider).Wait();
 
+
+            //enable peerjs middleware
+            //app.UsePeerJsServer();
 
         }
 

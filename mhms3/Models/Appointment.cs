@@ -24,5 +24,7 @@ namespace mhms3.Models
         public DateTime TimeStart { get; set; }
         [DataType(DataType.Time)]
         public DateTime TimeEnd { get; set; }
+
+        public string SessionKey { get; set; }
     }
 }

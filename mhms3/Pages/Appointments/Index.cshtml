@@ -16,7 +16,7 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].CounselorID)
-            </th> 
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].Client)
             </th>
@@ -28,6 +28,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Appointment[0].TimeEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Appointment[0].SessionKey)
             </th>
             <th></th>
         </tr>
@@ -54,6 +57,9 @@
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+            <td>
+                <a asp-page="/Call/CallCounselor" asp-route-key="@item.SessionKey">Start Call</a>
             </td>
         </tr>
 }
