@@ -82,10 +82,30 @@ namespace mhms3.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+                //get User
+                var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+                //get role for user
+                var isInRoleAdmin = await _signInManager.UserManager.IsInRoleAsync(user, "Admin");
+                var isInRoleManager = await _signInManager.UserManager.IsInRoleAsync(user, "Manager");
+                var isInRoleUser = await _signInManager.UserManager.IsInRoleAsync(user, "User");
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    if(isInRoleAdmin){
+                        return LocalRedirect("/Admin/ManageRoles");
+                    }
+                    if (isInRoleManager)
+                    {
+                        return LocalRedirect("/Manager/Counselors");
+                    }
+                    if (isInRoleUser)
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+
                 }
                 if (result.RequiresTwoFactor)
                 {

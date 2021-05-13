@@ -35,7 +35,7 @@ namespace mhms3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+                options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -123,6 +123,7 @@ namespace mhms3
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+            
             });
 
             CreateRoles(serviceProvider).Wait();

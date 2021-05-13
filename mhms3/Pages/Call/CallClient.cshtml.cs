@@ -10,7 +10,7 @@ namespace mhms3.Pages.Call
 {
     public class CallClientModel : PageModel
     {
-        public const string SessionKey = "_Key";
+        //public const string SessionKey = "_Key";
         public IActionResult OnGet(string key)
         {
             if (key == null)
@@ -22,10 +22,15 @@ namespace mhms3.Pages.Call
             Console.WriteLine(key);
 
             //set key to cookie
-            HttpContext.Session.SetString(SessionKey, key);
+            //HttpContext.Session.SetString(SessionKey, key);
+
+            Key = key;
 
             return Page();
 
         }
+
+        [BindProperty]
+        public string Key { get; set; }
     }
 }

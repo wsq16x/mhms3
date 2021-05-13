@@ -1,0 +1,48 @@
+﻿@page
+@model mhms3.Pages.Manager.Counselors.IndexModel
+@{
+    Layout = "_dashboard";
+}
+<h1>List of Counselors</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User ID
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ListCounselor)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    <a asp-area="" asp-page="/Manager/Counselors/ViewCLients" asp-route-id="@item.UserID">View Clients</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

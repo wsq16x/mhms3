@@ -44,7 +44,7 @@
 
 @section Scripts{
     <script>
-        var key = "@HttpContext.Session.GetString(CallClientModel.SessionKey)";
+        var key = "@Model.Key";
     </script>
     <script src="~/js/peerjs/dist/peerjs.min.js"></script>
     <script src="~/js/helpers/peerClient.js"></script>

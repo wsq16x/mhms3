@@ -1,0 +1,48 @@
+﻿@page
+@model mhms3.Pages.Admin.ManageRoles.IndexModel
+@{
+    Layout = "_dashboard";
+}
+<h1>List of Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User Id
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+               Role
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model._ListOfUser)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    <a asp-area="" asp-page="/Admin/ManageRoles/EditRole" asp-route-id="@item.UserID">Edit Role</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
