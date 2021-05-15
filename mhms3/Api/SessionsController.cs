@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using mhms3.Data;
 using mhms3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace mhms3.Api
 {
-    [Route("api/[controller]")]
+    [AllowAnonymous]
+    [Route("api/Sessions")]
     [ApiController]
     public class SessionsController : ControllerBase
     {
@@ -78,6 +80,7 @@ namespace mhms3.Api
         [HttpPost]
         public async Task<ActionResult<Session>> PostSession(Session session)
         {
+            Console.WriteLine("Hi from Post");
             _context.Session.Add(session);
             await _context.SaveChangesAsync();
 

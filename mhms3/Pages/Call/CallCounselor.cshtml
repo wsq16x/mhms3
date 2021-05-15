@@ -22,18 +22,17 @@
 </div>
 
 <div class="container">
-    <form>
+    <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
         <div class="form-group row">
             <div class="col-sm-12">
                 <input type="text" class="form-control" id="peerInput" placeholder="Enter peer's Id here" />
             </div>
         </div>
+
         <button class="btn btn-success" id="callButton">
             Call
         </button>
-        <button class="btn btn-warning" id="hangupButton">
-            Hang Up
-        </button>
+        <input class="btn btn-warning" id="hangupButton" type="submit" value="Hang Up">
     </form>
 </div>
 <div class="row">
@@ -46,7 +45,9 @@
     <script>
         var key = "@Model.Key";
     </script>
+    <script defer src="~/face-api/face-api.min.js"></script>
     <script src="~/js/peerjs/dist/peerjs.min.js"></script>
-    <script src="~/js/helpers/peerCounselor.js"></script>
+    <script defer src="~/js/helpers/FacePeerTest.js"></script>
+    <!--<script src="~/js/helpers/peerCounselor.js"></script>-->
 
     }
