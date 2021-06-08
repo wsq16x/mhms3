@@ -2,6 +2,7 @@
 @model mhms3.Pages.Clients.DeleteModel
 
 @{
+    Layout = "_DashboardCounselor";
     ViewData["Title"] = "Delete";
 }
 
@@ -63,7 +64,7 @@
     </dl>
     
     <form method="post">
-        <input type="hidden" asp-for="Client.ID" />
+        <input type="hidden" asp-for="Client.ClientId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

@@ -8,16 +8,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using mhms3.Data;
 using mhms3.Models;
+using mhms3.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace mhms3.Pages.Clients
 {
     public class EditModel : PageModel
     {
         private readonly mhms3.Data.ApplicationDbContext _context;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public EditModel(mhms3.Data.ApplicationDbContext context)
+        public EditModel(mhms3.Data.ApplicationDbContext context, IAuthorizationService authorizationService, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _authorizationService = authorizationService;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -30,7 +37,14 @@ namespace mhms3.Pages.Clients
                 return NotFound();
             }
 
-            Client = await _context.Client.FirstOrDefaultAsync(m => m.ID == id);
+            Client = await _context.Client.FirstOrDefaultAsync(m => m.ClientId == id);
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Client, CounselorOperations.Read);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
             if (Client == null)
             {
@@ -56,7 +70,7 @@ namespace mhms3.Pages.Clients
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClientExists(Client.ID))
+                if (!ClientExists(Client.ClientId))
                 {
                     return NotFound();
                 }
@@ -71,7 +85,7 @@ namespace mhms3.Pages.Clients
 
         private bool ClientExists(int id)
         {
-            return _context.Client.Any(e => e.ID == id);
+            return _context.Client.Any(e => e.ClientId == id);
         }
     }
 }

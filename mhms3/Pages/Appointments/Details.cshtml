@@ -3,48 +3,158 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Pages/Shared/_dashboard.cshtml";
+    Layout = "_DashboardCounselor";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Appointment</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.CounselorID)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.CounselorID)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.Client)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.Client.ID)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.AppDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.AppDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.TimeStart)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.TimeStart)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Appointment.TimeEnd)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Appointment.TimeEnd)
-        </dd>
-    </dl>
+<div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+        <div class="row align-items-center">
+            <div class="col">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Appointments
+                </div>
+                <h2 class="page-title">
+                    Appointment Details
+                </h2>
+            </div>
+            <!-- Page title actions -->
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <a asp-page="./Index" class="btn btn-primary d-none d-sm-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <line x1="5" y1="12" x2="11" y2="18"></line>
+                            <line x1="5" y1="12" x2="11" y2="6"></line>
+                        </svg>
+                        Back to list
+                    </a>
+                    <a asp-page="./Edit" asp-route-id="@Model.Appointment.AppointmentId" class="btn btn-outline-primary d-none d-sm-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"></path>
+                            <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"></path>
+                            <line x1="16" y1="5" x2="19" y2="8"></line>
+                        </svg>
+                        Edit
+                    </a>
+                    <a class="btn btn-outline-danger d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-delete">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <line x1="4" y1="7" x2="20" y2="7"></line>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                        </svg>
+                        Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Appointment.ID">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+<div class="page-body">
+    <div class="container-xl d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Html.DisplayNameFor(model => model.Appointment.AppointmentId)
+                                </label>
+                                <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Appointment.AppointmentId)" readonly="">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Html.DisplayNameFor(model => model.Appointment.ClientID)
+                                </label>
+                                <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Appointment.ClientID)" readonly="">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Html.DisplayNameFor(model => model.Appointment.Client.FirstName)
+                                </label>
+                                <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Appointment.Client.LastName)" readonly="">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Html.DisplayNameFor(model => model.Appointment.AppDate)
+                                </label>
+                                <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Appointment.AppDate)" readonly="">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Html.DisplayNameFor(model => model.Appointment.TimeStart)
+                                </label>
+                                <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Appointment.TimeStart)" readonly="">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Html.DisplayNameFor(model => model.Appointment.TimeEnd)
+                                </label>
+                                <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Appointment.TimeEnd)" readonly="">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Html.DisplayNameFor(model => model.Appointment.SessionKey)
+                                </label>
+                                <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Appointment.SessionKey)" readonly="">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    @Html.DisplayNameFor(model => model.Appointment.Status)
+                                </label>
+                                <input class="form-control" type="text" value="@Html.DisplayFor(model => model.Appointment.Status)" readonly="">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-blur fade" id="modal-delete" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-status bg-danger"></div>
+            <div class="modal-body text-center py-4">
+
+                <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 9v2m0 4v.01"></path><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path></svg>
+
+
+                <h3>Are you sure?</h3>
+                <div class="text-muted">Do you really want to Delete the Appointment? It cannot be undone.</div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="w-100">
+                    <div class="row">
+                        <div class="col">
+                            <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">
+                                Cancel
+                            </a>
+                        </div>
+                        <div class="col">
+                            <form method="post">
+                                <button asp-page-handler="Delete" asp-route-id="@Model.Appointment.AppointmentId" class="btn btn-danger w-100">Delete</button>
+                            </form>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

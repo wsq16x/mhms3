@@ -83,18 +83,19 @@ namespace mhms3.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
-                //get User
-                var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
-
-                //get role for user
-                var isInRoleAdmin = await _signInManager.UserManager.IsInRoleAsync(user, "Admin");
-                var isInRoleManager = await _signInManager.UserManager.IsInRoleAsync(user, "Manager");
-                var isInRoleUser = await _signInManager.UserManager.IsInRoleAsync(user, "User");
-
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    if(isInRoleAdmin){
+
+                    //get User
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+
+                    //get role for user
+                    var isInRoleAdmin = await _signInManager.UserManager.IsInRoleAsync(user, "Admin");
+                    var isInRoleManager = await _signInManager.UserManager.IsInRoleAsync(user, "Manager");
+                    var isInRoleUser = await _signInManager.UserManager.IsInRoleAsync(user, "User");
+
+                    if (isInRoleAdmin){
                         return LocalRedirect("/Admin/ManageRoles");
                     }
                     if (isInRoleManager)

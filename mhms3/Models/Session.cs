@@ -9,11 +9,12 @@ namespace mhms3.Models
 {
     public class Session
     {
-        public int Id { get; set; }
-        
-        public int AppointmentId { get; set; }
+        [Key]
+        public int SessionId { get; set; }
+        public string CounselorID { get; set; }
+        public int AppointmentID { get; set; }
 
-        [ForeignKey("AppointmentId")]
+        [ForeignKey("AppointmentID")]
         public Appointment Appointment { get; set; }
 
         [DataType(DataType.Date)]

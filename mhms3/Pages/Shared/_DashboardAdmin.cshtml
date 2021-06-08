@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tabler.min.css" rel="stylesheet">
+    <link href="/css/litepicker/dist/css/litepicker.css" rel="stylesheet">
+    @await RenderSectionAsync("Styles", required: false)
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <!--These are main content to insert into layout-->
+    <div class="wrapper">
+        <!--sidebar-->
+        <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h1 class="navbar-brand navbar-brand-autodark">
+                    <a href=".">
+                        <img src="/img/logo/memo_no_bg_dark.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+                        <span>ADMIN</span>
+                    </a>
+                </h1>
+                <!--navbar menu-->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="navbar-nav pt-lg-3">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Admin/Dashboard">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dashboard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <circle cx="12" cy="13" r="2"></circle>
+                                        <line x1="13.45" y1="11.55" x2="15.5" y2="9.5"></line>
+                                        <path d="M6.4 20a9 9 0 1 1 11.2 0z"></path>
+                                    </svg>
+                                </span>
+                                <span class="nav-link-title">
+                                    Dashboard
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="./Index">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path>
+                                    </svg>
+                                </span>
+                                <span class="nav-link-title">
+                                    Manage Roles
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        <header class="navbar navbar-expand-md navbar-light d-none d-lg-flex d-print-none">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!--have to send to login partial-->
+                <partial name="_DashboardLoginPartial" />
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <div>
+                        <form action="." method="get">
+                            <div class="input-icon">
+                                <span class="input-icon-addon">
+
+                                </span>
+                                <input type="text" class="form-control" placeholder="Search…" aria-label="Search in website">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="page-wrapper">
+            <!--insert content here-->
+            @RenderBody()
+        </div>
+    </div>
+    <!--js-->
+    <script src="/js/tabler.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/litepicker/dist/litepicker.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

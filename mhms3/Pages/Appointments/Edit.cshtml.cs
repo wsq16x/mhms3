@@ -8,16 +8,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using mhms3.Data;
 using mhms3.Models;
+using mhms3.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace mhms3.Pages.Appointments
 {
     public class EditModel : PageModel
     {
         private readonly mhms3.Data.ApplicationDbContext _context;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public EditModel(mhms3.Data.ApplicationDbContext context)
+        public EditModel(mhms3.Data.ApplicationDbContext context, IAuthorizationService authorizationService, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _authorizationService = authorizationService;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -31,7 +38,14 @@ namespace mhms3.Pages.Appointments
             }
 
             Appointment = await _context.Appointment
-                .Include(a => a.Client).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(a => a.Client).FirstOrDefaultAsync(m => m.AppointmentId == id);
+
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, Appointment, CounselorOperations.Read);
+
+            if (!isAuthorized.Succeeded)
+            {
+                return Forbid();
+            }
 
             if (Appointment == null)
             {
@@ -58,7 +72,7 @@ namespace mhms3.Pages.Appointments
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AppointmentExists(Appointment.ID))
+                if (!AppointmentExists(Appointment.AppointmentId))
                 {
                     return NotFound();
                 }
@@ -73,7 +87,7 @@ namespace mhms3.Pages.Appointments
 
         private bool AppointmentExists(int id)
         {
-            return _context.Appointment.Any(e => e.ID == id);
+            return _context.Appointment.Any(e => e.AppointmentId == id);
         }
     }
 }

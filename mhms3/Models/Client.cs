@@ -9,7 +9,8 @@ namespace mhms3.Models
 {
     public class Client
     {
-        public int ID { get; set; }
+        [Key]
+        public int ClientId { get; set; }
         public string CounselorID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

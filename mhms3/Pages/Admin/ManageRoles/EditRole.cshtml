@@ -1,20 +1,20 @@
 ﻿@page
 @model mhms3.Pages.Admin.ManageRoles.EditRoleModel
 @{
-    Layout = "_Layout";
+    Layout = "_DashboardAdmin";
 }
-<h1>Edit</h1>
+<!--<h1>Edit</h1>
 
 <h4>Role</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post">-->
             <!-------<div asp-validation-summary="ModelOnly" class="text-danger"></div>------>
-            <input type="hidden" asp-for="UID" />
+            <!--<input type="hidden" asp-for="UID" />
             <div class="form-group">
-                <label asp-for= "Role" class="control-label"></label>
-                <select asp-for= "Role" class="form-control" asp-items="ViewBag.Role"></select>
+                <label asp-for="Role" class="control-label"></label>
+                <select asp-for="Role" class="form-control" asp-items="ViewBag.Role"></select>
             </div>
 
             <div class="form-group">
@@ -26,4 +26,68 @@
 
 <div>
     <a asp-page="./Index">Back to List</a>
+</div>-->
+
+<div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+        <div class="row align-items-center">
+            <div class="col">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Users
+                </div>
+                <h2 class="page-title">
+                    Edit Role
+                </h2>
+            </div>
+            <!-- Page title actions -->
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+
+                    <a asp-page="./Index" class="btn btn-primary d-none d-sm-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <line x1="5" y1="12" x2="11" y2="18"></line>
+                            <line x1="5" y1="12" x2="11" y2="6"></line>
+                        </svg>
+                        Back to list
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--page body-->
+<div class="page-body">
+    <div class="container-xl">
+        <div class="row row-deck row-cards">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title"> Edit Role</h3>
+
+                            <form method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input asp-for="UID" class="form-control" type="hidden" />
+                                <div class="form-group mb-3">
+                                    <label asp-for="Role" class="form-label"></label>
+                                    <div>
+                                        <select asp-for="Role" class="form-control" asp-items="ViewBag.role"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

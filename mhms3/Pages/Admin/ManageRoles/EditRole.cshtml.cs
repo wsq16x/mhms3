@@ -23,6 +23,11 @@ namespace mhms3.Pages.Admin.ManageRoles
             _UserManager = userManager;
         }
 
+        [BindProperty]
+        public String Role { get; set; }
+        [BindProperty]
+        public string UID { get; set; }
+
         public async Task<IActionResult> OnGetAsync(string? id)
         {
             if (id == null)
@@ -34,7 +39,7 @@ namespace mhms3.Pages.Admin.ManageRoles
                 .Where(d => d.Name != "Admin")
                 .Select(a => a.Name).ToListAsync();
 
-            ViewData["Role"] = new SelectList(roleList);
+            ViewData["role"] = new SelectList(roleList);
 
 
             UID = id;
@@ -42,19 +47,14 @@ namespace mhms3.Pages.Admin.ManageRoles
             return Page();
         }
 
-        [BindProperty]
-        public string Role { get; set; }
-
-        [BindProperty]
-        public string UID { get; set; }
+        
         public async Task<IActionResult> OnPostAsync()
         {
+            Console.WriteLine(Role);
+            Console.WriteLine(UID);
 
             var user = await _UserManager.FindByIdAsync(UID);
             var oldRoleNames = await _UserManager.GetRolesAsync(user);
-
-            Console.WriteLine(UID);
-            Console.WriteLine(Role);
 
             await _UserManager.RemoveFromRolesAsync(user, oldRoleNames);
 

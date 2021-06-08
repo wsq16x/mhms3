@@ -7,16 +7,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using mhms3.Data;
 using mhms3.Models;
+using mhms3.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace mhms3.Pages.Clients
 {
     public class DeleteModel : PageModel
     {
         private readonly mhms3.Data.ApplicationDbContext _context;
+        private readonly IAuthorizationService _authorizationService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public DeleteModel(mhms3.Data.ApplicationDbContext context)
+        public DeleteModel(mhms3.Data.ApplicationDbContext context, IAuthorizationService authorizationService, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _authorizationService = authorizationService;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -29,7 +36,12 @@ namespace mhms3.Pages.Clients
                 return NotFound();
             }
 
-            Client = await _context.Client.FirstOrDefaultAsync(m => m.ID == id);
+            Client = await _context.Client.FirstOrDefaultAsync(m => m.ClientId == id);
+
+            //Check if have ownership
+            Client.CounselorID = _userManager.GetUserId(User);
+
+            //var isAuthorized = await _authorizationService.AuthorizeAsync(User, Client, );
 
             if (Client == null)
             {

@@ -25,7 +25,7 @@
       }
     },
     "Watch": {
-      "commandName": "Project",
+      "commandName": "Executable",
       "executablePath": "dotnet.exe",
       "workingDirectory": "$(ProjectDir)",
       "commandLineArgs": "watch run",

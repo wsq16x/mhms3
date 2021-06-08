@@ -1,4 +1,5 @@
 using mhms3.Data;
+using mhms3.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,7 +36,7 @@ namespace mhms3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(
+                options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -61,6 +62,12 @@ namespace mhms3
             });
 
             services.AddControllers();
+            services.AddScoped<IAuthorizationHandler,
+                     ClientIsOwnerAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler,
+                     AppointmentIsOwnerAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler,
+                     SessionIsOwnerAuthorizationHandler>();
             //services.AddSignalR();
 
 

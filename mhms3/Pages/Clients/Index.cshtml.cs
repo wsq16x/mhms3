@@ -13,6 +13,7 @@ using System.Security.Claims;
 namespace mhms3.Pages.Clients
 {
     
+    
     public class IndexModel : PageModel
     {
         private readonly mhms3.Data.ApplicationDbContext _context;

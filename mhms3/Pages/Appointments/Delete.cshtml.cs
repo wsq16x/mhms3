@@ -30,7 +30,7 @@ namespace mhms3.Pages.Appointments
             }
 
             Appointment = await _context.Appointment
-                .Include(a => a.Client).FirstOrDefaultAsync(m => m.ID == id);
+                .Include(a => a.Client).FirstOrDefaultAsync(m => m.AppointmentId == id);
 
             if (Appointment == null)
             {

@@ -9,13 +9,13 @@ namespace mhms3.Models
 {
     public class Appointment
     {
-        public int ID { get; set; }
+        [Key]
+        public int AppointmentId { get; set; }
         public int ClientID { get; set; }
-
-        public string CounselorID { get; set; }
 
         [ForeignKey("ClientID")]
         public Client Client { get; set; }
+        public string CounselorID { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime AppDate { get; set; }
@@ -26,5 +26,7 @@ namespace mhms3.Models
         public DateTime TimeEnd { get; set; }
 
         public string SessionKey { get; set; }
+
+        public string Status { get; set; }
     }
 }

@@ -3,52 +3,118 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Pages/Shared/_dashboard.cshtml";
+    Layout = "_DashboardCounselor";
 }
 
-<h1>Edit</h1>
-
-<h4>Appointment</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Appointment.ID" />
-            <div class="form-group">
-                <label asp-for="Appointment.ClientID" class="control-label"></label>
-                <select asp-for="Appointment.ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
-                <span asp-validation-for="Appointment.ClientID" class="text-danger"></span>
+<div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+        <div class="row align-items-center">
+            <div class="col">
+                <!-- Page pre-title -->
+                <div class="page-pretitle">
+                    Appointments
+                </div>
+                <h2 class="page-title">
+                    Edit Appointment
+                </h2>
             </div>
-            <div class="form-group">
-                <label asp-for="Appointment.CounselorID" class="control-label"></label>
-                <input asp-for="Appointment.CounselorID" class="form-control" />
-                <span asp-validation-for="Appointment.CounselorID" class="text-danger"></span>
+            <!-- Page title actions -->
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    <a asp-page="./Index" class="btn btn-primary d-none d-sm-inline-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <line x1="5" y1="12" x2="11" y2="18"></line>
+                            <line x1="5" y1="12" x2="11" y2="6"></line>
+                        </svg>
+                        Back to list
+                    </a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Appointment.AppDate" class="control-label"></label>
-                <input asp-for="Appointment.AppDate" class="form-control" />
-                <span asp-validation-for="Appointment.AppDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.TimeStart" class="control-label"></label>
-                <input asp-for="Appointment.TimeStart" class="form-control" />
-                <span asp-validation-for="Appointment.TimeStart" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Appointment.TimeEnd" class="control-label"></label>
-                <input asp-for="Appointment.TimeEnd" class="form-control" />
-                <span asp-validation-for="Appointment.TimeEnd" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+<div class="page-body">
+    <div class="container-xl d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Appointment.AppointmentId" />
+                            <input type="hidden" asp-for="Appointment.CounselorID" />
+                            <input type="hidden" asp-for="Appointment.SessionKey" />
+                            <div class="form-group mb-3 ">
+                                <label asp-for="Appointment.ClientID" class="form-label"></label>
+                                <div>
+                                    <input asp-for="Appointment.ClientID" class="form-control" readonly="" />
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 ">
+                                <label asp-for="Appointment.AppDate" class="form-label"></label>
+                                <div>
+                                    <input asp-for="Appointment.AppDate" class="form-control" />
+                                    <span asp-validation-foir="Appointment.AppDate" class="text-danger"></span>
+                                </div>
+                            </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
+                            <div class="form-group mb-3 ">
+                                <label asp-for="Appointment.TimeStart" class="form-label"></label>
+                                <div>
+                                    <input asp-for="Appointment.TimeStart" class="form-control" />
+                                    <span asp-validation-for="Appointment.TimeEnd" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3 ">
+                                <label asp-for="Appointment.TimeEnd" class="form-label"></label>
+                                <div>
+                                    <input asp-for="Appointment.TimeEnd" class="form-control" />
+                                    <span asp-validation-for="Appointment.TimeEnd" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-label">Status</div>
+                                <div>
+                                    <label asp-for="Appointment.Status" class="form-check">
+                                        <input asp-for="Appointment.Status" class="form-check-input" type="radio" value="Missed">
+                                        <span class="form-check-label">Missed</span>
+                                    </label>
+                                    <label asp-for="Appointment.Status" class="form-check">
+                                        <input asp-for="Appointment.Status" class="form-check-input" type="radio" value="Rescheduled">
+                                        <span class="form-check-label">Rescheduled</span>
+                                    </label>
+                                    <label asp-for="Appointment.Status" class="form-check">
+                                        <input asp-for="Appointment.Status" class="form-check-input" type="radio" value="Completed">
+                                        <span class="form-check-label">Completed</span>
+                                    </label>
+                                    <label asp-for="Appointment.Status" class="form-check">
+                                        <input asp-for="Appointment.Status" class="form-check-input" type="radio" value="Pending">
+                                        <span class="form-check-label">Pending</span>
+                                    </label>
+                                    <label asp-for="Appointment.Status" class="form-check">
+                                        <input asp-for="Appointment.Status" class="form-check-input" type="radio" value="Unknown">
+                                        <span class="form-check-label">Unknown</span>
+                                    </label>
+
+                                </div>
+                            </div>
+
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

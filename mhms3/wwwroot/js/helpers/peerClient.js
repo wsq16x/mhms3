@@ -22,7 +22,9 @@ peer.on('open', function (id) {
 
     console.log('My peer ID is: ' + id);
 
-    myId.innerText = id;
+    startCall();
+
+
 
 });
 
@@ -49,7 +51,7 @@ peer.on('call', function (mediaConnection) {
 });
 
 
-callBtn.addEventListener("click", function (event) {
+function startCall () {
 
     //getting the doctors ID from cookie
     var user = key;
@@ -73,6 +75,4 @@ callBtn.addEventListener("click", function (event) {
             });
 
         });
-
-    event.preventDefault();
-});
+};

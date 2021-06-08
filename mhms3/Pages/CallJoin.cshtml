@@ -2,10 +2,27 @@
 @model mhms3.Pages.CallJoinModel
 @{
     ViewData["Title"] = "CallJoin";
+    Layout = "_LandingLayout";
 }
-<form method="post">
-    <label asp-for="Key">Input key:</label>
-    <input asp-for="Key"/><br><br>
-    <input type="submit">
-</form>
-        
+<div class="page-body page-center">
+    <div class="page page-center">
+        <div class="container-tight py-4">
+            <div class="text-center mb-4">
+                <a href="."><img src="./img/logo/memo_no_bg_blue.svg" alt="" height="50"></a>
+            </div>
+            <!---this part goes to login-->
+            <form class="card card-md" method="POST" autocomplete="off">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Join a Session</h2>
+                    <div class="mb-3">
+                        <input asp-for="Key" class="form-control" placeholder="Enter Session Key">
+                    </div>
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary w-100">Join</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

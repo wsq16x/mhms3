@@ -1,53 +1,178 @@
 ﻿@page
 @model mhms3.Pages.Call.CallCounselorModel
 @using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
+    var token = Xsrf.GetAndStoreTokens(HttpContext).RequestToken;
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome <span id="myId"></span></h1>
-</div>
-
-<div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-xs-6 col-md-3">
-            <video id="myVideo" playsinline autoplay muted style="max-width: 100%;"></video>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tabler.min.css" rel="stylesheet">
+    <link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
+    <style>
+        .meter {
+            width: 100%;
+            height: 15px;
+            position: relative;
+        }
+    </style>
+    <title>Call Counselor</title>
+</head>
+<body class="antialiased d-flex flex-column bg-dark" style="max-height: 100vh">
+    <!--These are main content to insert into layout-->
+    <header class="navbar navbar-expand-md navbar-transparent d-print-none">
+        <div class="container-fluid">
+            <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                <a href=".">
+                    <img src="/img/logo/memo_no_bg_dark.svg" alt="MEMO" class="navbar-brand-image" width="110" height="32">
+                </a>
+            </h1>
+            <div class="navbar-nav flex-row order-md-last">
+            </div>
+            <!--Nav menu-->
         </div>
-        <div class="col-xs-6 col-md-9">
-            <video id="peerVideo" playsinline autoplay style="max-width: 100%;"></video>
+    </header>
+    <div class="page-wrapper px-3 pb-2 pt-2">
+        <div class="row d-flex flex-fill">
+            <div class="col-md-9 d-flex flex-fill">
+                <span class="border border-primary d-flex flex-fill rounded justify-content-center" style="background-color: black;">
+                    <video id="peerVideo" playsinline autoplay style="height: auto; width: auto; max-height: 100%"></video>
+                </span>
+            </div>
+            <div class="col-md-3">
+                <div class="row mb-3 d-flex flex-fill" style="height: 20vh;">
+                    <div class="col d-flex flex-fill">
+                        <span class="border border-primary d-flex flex-fill rounded" style="background-color: black;">
+                            <video id="myVideo" playsinline autoplay muted style="height: 20vh; width: 100%;"></video>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="card bg-dark border border-primary">
+                            <div class="card-table">
+                                <table class="table table-dark">
+                                    <tr>
+                                        <td>
+                                            <i class="em em-neutral_face" aria-role="presentation" aria-label="NEUTRAL_FACE"></i>
+                                            Neutral
+                                        </td>
+                                        <td>
+                                            <div class="meter" id="neutral"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="em em-smiley" aria-role="presentation" aria-label="SMILEY"></i>
+                                            happy
+                                        </td>
+                                        <td>
+                                            <div class="meter" id="happy"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="em em-frowning" aria-role="presentation" aria-label="FROWNING"></i>
+                                            sad
+                                        </td>
+                                        <td>
+                                            <div class="meter" id="sad"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="em em-angry" aria-role="presentation" aria-label="ANGRY"></i>
+                                            angry
+                                        </td>
+                                        <td>
+                                            <div class="meter" id="angry"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="em em-fearful" aria-role="presentation" aria-label="FEARFUL"></i>
+                                            fearful
+                                        </td>
+                                        <td>
+                                            <div class="meter" id="fear"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="em-svg em-confounded" aria-role="presentation" aria-label="CONFOUNDED"></i>
+                                            disgust
+                                        </td>
+                                        <td>
+                                            <div class="meter" id="disgust"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <i class="em em-astonished" aria-role="presentation" aria-label="ASTONISHED"></i>
+                                            surprised
+                                        </td>
+                                        <td>
+                                            <div class="meter" id="surprise"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">&nbsp;</div>
-</div>
-
-<div class="container">
-    <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
-        <div class="form-group row">
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="peerInput" placeholder="Enter peer's Id here" />
+        <div class="container-xl pb-3">
+            <div class="row align-items-center">
+                <div class="col-auto mx-auto">
+                    <button id="endCall" class="btn btn-danger">End Call</button>
+                </div>
             </div>
         </div>
 
-        <button class="btn btn-success" id="callButton">
-            Call
-        </button>
-        <input class="btn btn-warning" id="hangupButton" type="submit" value="Hang Up">
-    </form>
-</div>
-<div class="row">
-    <div class="col-12">
-        &nbsp;
     </div>
-</div>
+    <form id="OnEnd" method="post" asp-page-handler="Complete">
+        <input type="hidden" asp-for="Appointment.AppointmentId" />
+    </form>
 
-@section Scripts{
+    <!--js-->
+    <script src="/js/tabler.min.js"></script>
+    <script src="/js/luxon/build/global/luxon.min.js"></script>
     <script>
-        var key = "@Model.Key";
+        var key = "@Model.Appointment.SessionKey";
+        var AppId = "@Model.Appointment.AppointmentId";
+        var Cid = "@Model.Appointment.CounselorID";
     </script>
+    <script src="https://cdn.jsdelivr.net/gh/kimmobrunfeldt/progressbar.js@master/dist/progressbar.min.js"></script>
     <script defer src="~/face-api/face-api.min.js"></script>
     <script src="~/js/peerjs/dist/peerjs.min.js"></script>
     <script defer src="~/js/helpers/FacePeerTest.js"></script>
-    <!--<script src="~/js/helpers/peerCounselor.js"></script>-->
+    <script src="~/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function OnComplete() {
+            $.ajax({
+                type: "POST",
+                // Note the difference in url (this works if you're actually in Index page)
+                url: "/Call/CallCounselor?handler=Complete",
+                headers: { "RequestVerificationToken": "@token"},
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (error) {
+                    alert("Error: " + error);
+                }
+            })
+        }
+    </script>
 
-    }
+
+</body>
+</html>

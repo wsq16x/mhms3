@@ -34,6 +34,8 @@ namespace mhms3.Api
         [HttpGet("{id}")]
         public async Task<ActionResult<Session>> GetSession(int id)
         {
+            Console.WriteLine("GET request recieved.");
+
             var session = await _context.Session.FindAsync(id);
 
             if (session == null)
@@ -49,7 +51,7 @@ namespace mhms3.Api
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSession(int id, Session session)
         {
-            if (id != session.Id)
+            if (id != session.SessionId)
             {
                 return BadRequest();
             }
@@ -84,7 +86,7 @@ namespace mhms3.Api
             _context.Session.Add(session);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSession", new { id = session.Id }, session);
+            return CreatedAtAction("GetSession", new { id = session.SessionId }, session);
         }
 
         // DELETE: api/Sessions/5
@@ -105,7 +107,7 @@ namespace mhms3.Api
 
         private bool SessionExists(int id)
         {
-            return _context.Session.Any(e => e.Id == id);
+            return _context.Session.Any(e => e.SessionId == id);
         }
     }
 }

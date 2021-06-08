@@ -21,6 +21,56 @@
         "dist/peerjs.min.js",
         "dist/peerjs.min.js.map"
       ]
+    },
+    {
+      "library": "chart.js@3.2.1",
+      "destination": "wwwroot/js/chart.js/",
+      "files": [
+        "dist/chart.min.js"
+      ]
+    },
+    {
+      "library": "hammerjs@2.0.8",
+      "destination": "wwwroot/js/hammerjs/",
+      "files": [
+        "hammer.min.js"
+      ]
+    },
+    {
+      "library": "chartjs-plugin-zoom@1.0.0-rc",
+      "destination": "wwwroot/js/chartjs-plugin-zoom/",
+      "files": [
+        "dist/chartjs-plugin-zoom.min.js"
+      ]
+    },
+    {
+      "library": "moment@2.29.1",
+      "destination": "wwwroot/js/moment/",
+      "files": [
+        "dist/moment.js"
+      ]
+    },
+    {
+      "library": "luxon@1.27.0",
+      "destination": "wwwroot/js/luxon/",
+      "files": [
+        "build/global/luxon.min.js.map",
+        "build/global/luxon.min.js"
+      ]
+    },
+    {
+      "library": "apexcharts@3.26.3",
+      "destination": "wwwroot/css/apexcharts/",
+      "files": [
+        "dist/apexcharts.css"
+      ]
+    },
+    {
+      "library": "litepicker@2.0.11",
+      "destination": "wwwroot/css/litepicker/",
+      "files": [
+        "dist/css/litepicker.css"
+      ]
     }
   ]
 }
