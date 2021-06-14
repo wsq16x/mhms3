@@ -13,12 +13,12 @@ namespace mhms3.Pages.Call
     public class CallClientModel : PageModel
     {
         //public const string SessionKey = "_Key";
-        public IActionResult OnGet(string key)
+        public IActionResult OnGet(string? key)
         {
             if (key == null)
             {
                 Console.WriteLine("Session Key Invalid");
-                return Page();
+                return RedirectToPage("/Error");
             }
             Console.WriteLine("Your key is: ");
             Console.WriteLine(key);

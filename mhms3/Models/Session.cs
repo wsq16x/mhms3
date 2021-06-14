@@ -26,5 +26,6 @@ namespace mhms3.Models
         public DateTime TimeEnd { get; set; }
 
         public string Expressions { get; set; }
+        public string Notes { get; set; }
     }
 }

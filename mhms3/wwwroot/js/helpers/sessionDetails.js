@@ -4,7 +4,10 @@ const uri = "/api/Sessions/" + sessionId;
 //luxon
 var dt = luxon.DateTime
 
-//var ctx = document.getElementById('myChart').getContext('2d');
+var saveBtn = document.getElementById('SaveBtn')
+var expressions;
+var rawData;
+var contents;
 
 var ChartData;
 var neutral = [];
@@ -17,15 +20,65 @@ var surprised = [];
 var timestamp = [];
 let counter = [0, 0, 0, 0, 0, 0, 0]
 
+
+var editorOptions = {
+    theme: 'snow',
+    placeholder: 'Add session notes here'
+}
+
+var editorOptions2 = {
+    //theme: 'snow',
+    modules: {
+        toolbar: false
+    },
+    placeholder: 'Add session notes here',
+    readOnly: true
+}
+
+var editor = new Quill('#Editor', editorOptions)
+var editorReadonly = new Quill('#EditorRead', editorOptions2)
+
 function getItem() {
     fetch(uri)
         .then(response => response.json())
         .then(data => saveData(data))
         .catch(error => console.error('Unable to get items.', error));
- }
+}
 
-function saveData(data){
-    var expressions = JSON.parse(data.expressions);
+function addNotes() {
+
+    var notes = JSON.stringify(editor.getContents())
+
+    const item = {
+        SessionId: sessionId,
+        AppointmentID: rawData.appointmentID,
+        Date: rawData.date,
+        TimeStart: rawData.timeStart,
+        TimeEnd: rawData.timeEnd,
+        Expressions: rawData.expressions,
+        CounselorID: rawData.counselorID,
+        Notes: notes
+    }
+
+    fetch(uri, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+    })
+        .then(updateQuill())
+        .catch(error => console.error('unable to update item', error))
+        
+}
+
+function saveData(data) {
+
+    rawData = data
+
+    contents = JSON.parse(data.notes)
+    expressions = JSON.parse(data.expressions);
     expressions.map(obj => {
         let keys = Object.keys(obj);
         // console.log(keys);
@@ -48,6 +101,7 @@ function saveData(data){
     })
 
     mapData(expressions)
+    initQuill()
 }
 
 getItem();
@@ -161,9 +215,20 @@ function apexChart() {
 
     chart.render();
     chart_pie.render();
-
-
-
-    
+  
 }
 
+
+function initQuill() {
+    editor.setContents(contents.ops)
+    editorReadonly.setContents(contents.ops)
+}
+
+function updateQuill() {
+    editorReadonly.setContents(editor.getContents())
+}
+
+//Notes
+saveBtn.addEventListener("click", function (event) {
+    addNotes();
+});

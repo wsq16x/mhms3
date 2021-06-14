@@ -155,7 +155,11 @@ function addItem() {
 
     intervalCheck = 1;
 
-    endTime = dt.now().toISO();
+    if (startTime = null) {
+        endTime = null
+    }
+    else
+        endTime = dt.now().toISO();
 
     var expressionsStr = JSON.stringify(expressions);
  

@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/tabler.min.css" rel="stylesheet">
+    <title>@ViewData["title"]</title>
+</head>
+<body id="body" class="antialiased border-top-wide border-primary d-flex flex-column">
+    <!--These are main content to insert into layout-->
+    <div class="page page-center">
+        <div class="container-tight py-4">
+            @RenderBody()
+        </div>
+    </div>
+    <!--js-->
+    <script src="/js/tabler.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

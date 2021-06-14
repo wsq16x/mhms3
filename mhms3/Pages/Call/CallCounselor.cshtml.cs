@@ -28,11 +28,9 @@ namespace mhms3.Pages.Call
         
         [BindProperty]
         public Appointment Appointment { get; set; }
+        [BindProperty]
+        public Session Session { get; set; }
 
-        [BindProperty]
-        public string Key { get; set; }
-        [BindProperty]
-        public int appId { get; set; }
 
         public async Task <IActionResult> OnGetAsync(int ?AppId)
         {
@@ -45,7 +43,10 @@ namespace mhms3.Pages.Call
             Appointment = await _context.Appointment
                .FirstOrDefaultAsync(m => m.AppointmentId == AppId);
 
-            appId = Appointment.AppointmentId;
+            if(Appointment.Status != "Pending" && Appointment.Status != "Rescheduled")
+            {
+                return RedirectToPage("/Error");
+            }
 
             Console.WriteLine(Appointment.AppointmentId);
 
@@ -70,17 +71,18 @@ namespace mhms3.Pages.Call
             Console.WriteLine(Appointment.AppointmentId);
 
             //var Appid = Appointment.AppointmentId;
-            Appointment = await _context.Appointment
-                .FirstOrDefaultAsync(m => m.AppointmentId == Appointment.AppointmentId);
+            Session = await _context.Session
+                .Include(a => a.Appointment)
+                .FirstOrDefaultAsync(m => m.AppointmentID == Appointment.AppointmentId);
 
-            Console.WriteLine(Appointment.Status);
-            Appointment.Status = "Completed";
+            Console.WriteLine(Session.Appointment.Status);
+            Session.Appointment.Status = "Completed";
 
             //_context.Attach(Appointment).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Sessions/Details?id="+Session.SessionId);
         }
 
     }

@@ -71,6 +71,14 @@
       "files": [
         "dist/css/litepicker.css"
       ]
+    },
+    {
+      "library": "quill@1.3.7",
+      "destination": "wwwroot/css/quill/",
+      "files": [
+        "dist/quill.snow.css",
+        "dist/quill.bubble.css"
+      ]
     }
   ]
 }
