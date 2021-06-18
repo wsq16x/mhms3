@@ -78,21 +78,5 @@ namespace mhms3.Pages.Sessions
             return RedirectToPage("./Index");
         }
 
-/*        public async Task<IActionResult> OnPostAsync()
-        {
-            Session = await _context.Session
-                .Include(a => a.Appointment)
-                .FirstOrDefaultAsync(m => m.SessionId == Session.SessionId);
-
-            Console.WriteLine(Session.Appointment.Status);
-            Session.Appointment.Status = "Completed";
-
-            //_context.Attach(Appointment).State = EntityState.Modified;
-
-            await _context.SaveChangesAsync();
-
-            return Page();
-        }*/
-
     }
 }

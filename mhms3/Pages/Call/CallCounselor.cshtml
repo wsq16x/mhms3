@@ -137,9 +137,49 @@
         </div>
 
     </div>
-    <form id="OnEnd" method="post" asp-page-handler="Complete">
-        <input type="hidden" asp-for="Appointment.AppointmentId" />
-    </form>
+    <!--form to OnEnd-->
+    @*    <form id="OnEnd" method="post" asp-page-handler="Complete">
+            <input type="hidden" asp-for="Appointment.AppointmentId" />
+        </form>*@
+
+    <div class="modal modal-blur fade" id="modal-continue" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-status bg-success"></div>
+                <div class="modal-body text-center py-4">
+
+                    <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M9 12l2 2l4 -4"></path>
+                    </svg>
+
+                    <h3>Session saved.</h3>
+                    <div class="text-muted">Continue to session details to add notes</div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col">
+                                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">
+                                    Cancel
+                                </a>
+                            </div>
+                            <div class="col">
+                                <form method="post" asp-page-handler="Complete">
+                                    <input type="hidden" asp-for="Appointment.AppointmentId" />
+                                    <button type="submit" class="btn btn-success w-100">Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--js-->
     <script src="/js/tabler.min.js"></script>

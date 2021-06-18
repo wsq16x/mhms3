@@ -10,12 +10,19 @@ const callBtn = document.getElementById("callButton");
 let randomId = Math.random().toString(36).substring(3);
 
 const peer = new Peer(randomId, {
-    host: 'localhost',
-    port: 9000,
+    host: 'powerful-escarpment-39791.herokuapp.com',
+    port: 443,
     //host: 'peerjsserverdemo20200405055319.azurewebsites.net',
     //port: 443,
-    path: '/myapp',
-    secure: false
+    //path: '/myapp',
+    secure: true,
+
+    config: {
+        'iceServers': [
+            { 'url': 'stun:stun.l.google.com:19302' },
+            { 'url': 'turn:memo-turn.southcentralus.azurecontainer.io', username: 'WASQ16', credential: 'Wasique_1996' }
+        ]
+    }
 });
 
 peer.on('open', function (id) {

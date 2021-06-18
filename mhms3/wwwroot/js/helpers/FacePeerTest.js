@@ -21,7 +21,7 @@ var startTime;
 var endTime;
 
 //api
-const uri = "https://localhost:5001/api/Sessions";
+const uri = "/api/Sessions";
 
 //luxon
 var dt = luxon.DateTime;
@@ -86,12 +86,19 @@ let expressions = [];
 let intervalCheck = 0;
 
 const peer = new Peer(key, {
-    host: 'localhost',
-    port: 9000,
+    host: 'powerful-escarpment-39791.herokuapp.com',
+    port: 443,
     //host: 'peerjsserverdemo20200405055319.azurewebsites.net',
     //port: 443,
-    path: '/myapp',
-    secure: false
+    //path: '/myapp',
+    secure: true,
+
+    config: {
+        'iceServers': [
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'turn:memo-turn.southcentralus.azurecontainer.io', username: 'WASQ16', credential: 'Wasique_1996' }
+        ]
+    }
 });
 
 peer.on('open', function (id) {
@@ -125,68 +132,46 @@ peer.on('call', function (mediaConnection) {
 });
 
 
-/*callBtn.addEventListener("click", function (event) {
-    var user = peerInput.value;
-
-    navigator.mediaDevices
-        .getUserMedia({
-            audio: true,
-            video: true
-        })
-        .then(function (mediaStream) {
-
-            myVideo.srcObject = mediaStream;
-
-            // Call a peer, providing our mediaStream
-            var call = peer.call(user, mediaStream);
-
-            call.on('stream', function (stream) {
-                // `stream` is the MediaStream of the remote peer.
-                // Here you'd add it to an HTML video/canvas element.
-                peerVideo.srcObject = stream;
-            });
-
-        });
-
-    event.preventDefault();
-});*/
-
 function addItem() {
 
+    peer.destroy()
     intervalCheck = 1;
 
-    if (startTime = null) {
-        endTime = null
+    //startTime = dt.now().toISO();
+  if (startTime != null) {
+      endTime = dt.now().toISO();
+
+      var expressionsStr = JSON.stringify(expressions);
+
+      const item = {
+
+          AppointmentId: AppId,
+          Date: appDate,
+          TimeStart: startTime,
+          TimeEnd: endTime,
+          Expressions: expressionsStr,
+          CounselorID: Cid
+      };
+
+      //console.log(expressions)
+
+      fetch(uri, {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(item)
+      })
+          .then(response => response.json())
+          //.then(data => console.log(data))
+          .catch(error => console.error('Unable to add item.', error))
+          .then(showModal());
     }
     else
-        endTime = dt.now().toISO();
+        console.log("Session was empty. Skipping push.")
 
-    var expressionsStr = JSON.stringify(expressions);
- 
-    const item = {
-
-        AppointmentId: AppId,
-        Date: appDate,
-        TimeStart: startTime,
-        TimeEnd: endTime,
-        Expressions: expressionsStr,
-        CounselorID: Cid
-    };
-
-    console.log(expressions)
-
-    fetch(uri, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(item)
-    })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Unable to add item.', error))
-        .then(document.getElementById("OnEnd").submit());
+    
     
 }
 
@@ -254,3 +239,7 @@ peerVideo.addEventListener('play', () => {
         //faceapi.draw.drawFaceExpressions(canvas, resizeDetections)
     }, 1000)
 })
+
+function showModal() {
+    $("#modal-continue").modal("show")
+}
