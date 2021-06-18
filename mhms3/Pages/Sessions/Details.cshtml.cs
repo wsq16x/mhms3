@@ -42,6 +42,7 @@ namespace mhms3.Pages.Sessions
                 .Include(s => s.Appointment)
                 .ThenInclude(a => a.Client)
                 .FirstOrDefaultAsync(m => m.SessionId == id);
+                
 
             var isAuthorized = await _authorizationService.AuthorizeAsync(User, Session, CounselorOperations.Read);
 

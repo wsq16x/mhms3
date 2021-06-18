@@ -19,8 +19,8 @@ const peer = new Peer(randomId, {
 
     config: {
         'iceServers': [
-            { 'url': 'stun:stun.l.google.com:19302' },
-            { 'url': 'turn:memo-turn.southcentralus.azurecontainer.io', username: 'WASQ16', credential: 'Wasique_1996' }
+            { urls: 'stun:stun.l.google.com:19302' },
+            { urls: 'turn:memo-turn.southcentralus.azurecontainer.io', username: 'WASQ16', credential: 'Wasique_1996' }
         ]
     }
 });

@@ -82,7 +82,7 @@ namespace mhms3.Pages.Call
 
             await _context.SaveChangesAsync();
 
-            return Redirect("~/Pages/Sessions/Details?id="+Session.SessionId);
+            return Redirect("~/Sessions/Details?id="+Session.SessionId);
         }
 
     }
