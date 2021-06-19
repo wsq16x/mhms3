@@ -29,7 +29,7 @@ namespace mhms3.Pages.Sessions
         [BindProperty]
         public Session Session { get; set; }
         [BindProperty]
-        public TimeSpan duration {get; set;}
+        public String duration {get; set;}
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -52,7 +52,9 @@ namespace mhms3.Pages.Sessions
             }
 
             //calculating duration
-            duration = Session.TimeEnd - Session.TimeStart;
+            var timeSpan = Session.TimeEnd - Session.TimeStart;
+
+            duration = timeSpan.ToString(@"hh\:mm\:ss");
 
             if (Session == null)
             {

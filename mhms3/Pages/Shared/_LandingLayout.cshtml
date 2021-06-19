@@ -9,8 +9,7 @@
     <link href="css/tabler.min.css" rel="stylesheet">
 </head>
 <body id ="my-background" class="d-flex flex-column">
-@*    <div class="wrapper">
-*@        <header class="navbar navbar-expand-md navbar-dark top-sticky d-print-none">
+      <header class="navbar navbar-expand-md navbar-dark top-sticky d-print-none">
             <div class="container-xl">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                     <span class="navbar-toggler-icon"></span>
@@ -56,7 +55,6 @@
             </div>
         </header>
         @RenderBody()
-   @* </div>*@
     <!-- js -->
     <script src="js/tabler.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
