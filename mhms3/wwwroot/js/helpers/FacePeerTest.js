@@ -111,6 +111,8 @@ peer.on('open', function (id) {
 
 peer.on('call', function (mediaConnection) {
 
+    $("#modal-waiting").modal("hide")
+
     navigator.mediaDevices
         .getUserMedia({
             audio: true,

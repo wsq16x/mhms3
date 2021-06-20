@@ -21,6 +21,14 @@
             height: 15px;
             position: relative;
         }
+        .animate {
+            -webkit-animation:spin 4s linear infinite;
+            -moz-animation:spin 4s linear infinite;
+            animation:spin 4s linear infinite;
+        }
+            @@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+            @@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+            @@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
     </style>
     <title>Call Counselor</title>
 </head>
@@ -181,19 +189,56 @@
         </div>
     </div>
 
+    <div class="modal modal-blur fade" id="modal-waiting" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                @*                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                *@                <div class="modal-status bg-primary"></div>
+                <div class="modal-body text-center py-4">
+
+                    <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-loader-quarter animate" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <line x1="12" y1="6" x2="12" y2="3"></line>
+                        <line x1="6" y1="12" x2="3" y2="12"></line>
+                        <line x1="7.75" y1="7.75" x2="5.6" y2="5.6"></line>
+                    </svg>
+
+                    <h3>Waiting for client to connect</h3>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="w-100">
+                        <div class="row">
+                            <div class="col">
+                                <a class="btn btn-primary w-100" asp-page="/Appointments/Details" asp-route-id="@Model.Appointment.AppointmentId">Go back to appointment details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--js-->
+    <script src="~/js/jquery.min.js"></script>
     <script src="/js/tabler.min.js"></script>
     <script src="/js/luxon/build/global/luxon.min.js"></script>
+
     <script>
         var key = "@Model.Appointment.SessionKey";
         var AppId = "@Model.Appointment.AppointmentId";
         var Cid = "@Model.Appointment.CounselorID";
     </script>
+    <script type="text/javascript">
+        $(window).on('load', function () {
+            $('#modal-waiting').modal('show');
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/gh/kimmobrunfeldt/progressbar.js@master/dist/progressbar.min.js"></script>
     <script defer src="~/face-api/face-api.min.js"></script>
     <script src="~/js/peerjs/dist/peerjs.min.js"></script>
     <script defer src="~/js/helpers/FacePeerTest.js"></script>
-    <script src="~/js/jquery.min.js"></script>
     <script type="text/javascript">
         function OnComplete() {
             $.ajax({
